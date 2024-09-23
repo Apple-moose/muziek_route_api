@@ -1,0 +1,115 @@
+SQL insert one row query:
+
+insert into songs (id, title, artist, "createdAt", "updatedAt")
+values (54, 'teardrop', 'Massive Attack', NOW(), NOW()) 
+
+SQL insert all categories.data query
+
+insert into songs (id, title, artist, "createdAt", "updatedAt")
+values (1, $$Ain't no Sunshine$$, 'Bill Withers', NOW(), NOW()),
+
+(2, $$Ain't nobody$$, 'Shaka Khan', NOW(), NOW()),
+
+(3, $$All of me$$, 'John Legend', NOW(), NOW()),
+
+(4, $$Als ze er niet is$$, 'de Dijk', NOW(), NOW()),
+
+(5, $$Anders Anders$$, 'Herman van Veen', NOW(), NOW()),
+
+(15, $$Believe$$, 'Cher', NOW(), NOW()),
+
+(16, $$Besame Mucho$$, 'Consuelo Velasquez', NOW(), NOW()),
+
+(7, $$Blauwe Dag$$, 'Suzan & Freek', NOW(), NOW()),
+
+(14, $$Can't help Falling in Love$$, 'Elvis Presley', NOW(), NOW()),
+
+(53, $$Con te Partiro (Time to say Goodbye)$$, 'Bocelli-Brightman', NOW(), NOW()),
+
+(10, $$Dates in Pickup Trucks$$, 'Kassi Ashton', NOW(), NOW()),
+
+(11, $$Don't Know Why$$, 'Norah Jones', NOW(), NOW()),
+
+(12, $$Dreams$$, 'Fleetwood Mac', NOW(), NOW()),
+
+(6, $$Een Beetje Verliefd$$, 'Andre Hazes', NOW(), NOW()),
+
+(17, $$Feel$$, 'Robbie Williams', NOW(), NOW()),
+
+(13, $$Flowers$$, 'Miley Cyrus', NOW(), NOW()),
+
+(18, $$Fly me to the Moone$$, 'Bart Howard', NOW(), NOW()),
+
+(19, $$Hallelujah$$, 'Leonard Cohen', NOW(), NOW()),
+
+(41, $$Heb het Leven Lief (Savoir Aimer)$$, 'Pascal Obispo', NOW(), NOW()),
+
+(20, $$Het is een nacht$$, 'Guus Meeuwis', NOW(), NOW()),
+
+(21, $$Hopelessly Devoted to You$$, 'Grease', NOW(), NOW()),
+
+(22, $$How Deep is your Love$$, 'Bee-Gees', NOW(), NOW()),
+
+(23, $$How would you feel$$, 'Krezip', NOW(), NOW()),
+
+(24, $$I'm Yours$$, 'Jason Mraz', NOW(), NOW()),
+
+(25, $$Just the Two of Us$$, 'Bill Withers', NOW(), NOW()),
+
+(26, $$Kiss Me$$, 'SixSpence', NOW(), NOW()),
+
+(27, $$La Vie en Rose$$, 'Edith Piaf', NOW(), NOW()),
+
+(28, $$Let me Love you$$, 'Justin Bieber & Dj Snake', NOW(), NOW()),
+
+(29, $$Let's Stay Together$$, 'Al Green', NOW(), NOW()),
+
+(30, $$Love Fool$$, 'The Cardigans', NOW(), NOW()),
+
+(31, $$Love you More$$, 'Racoons', NOW(), NOW()),
+
+(32, $$Lovely Day$$, 'Bill Withers', NOW(), NOW()),
+
+(33, $$LoveSong$$, 'TheCure', NOW(), NOW()),
+
+(34, $$Mag Ik Dan Bij Jouw$$, 'Claudia de Breij', NOW(), NOW()),
+
+(35, $$Make you Feel my Love$$, 'Adele', NOW(), NOW()),
+
+(36, $$More than Words$$, 'Extreme', NOW(), NOW()),
+
+(37, $$Need you Now$$, 'Lady Antebellum', NOW(), NOW()),
+
+(38, $$Non, Je Ne Regrette Rien$$, 'Edith Piaf', NOW(), NOW()),
+
+(39, $$Omarm$$, 'Blof', NOW(), NOW()),
+
+(52, $$Please Please Please$$, 'Sabrina Carpenter', NOW(), NOW()),
+
+(40, $$Roller Coaster$$, 'Danny Vera', NOW(), NOW()),
+
+(42, $$Sunrise$$, 'Norah Jones', NOW(), NOW()),
+
+(54, $$Teardrop$$, 'Massive Attack', NOW(), NOW()),
+
+(8, $$The Book Of Love$$, 'Peter Gabriel', NOW(), NOW()),
+
+(9, $$the Cup Song$$, 'Anna Kendrick', NOW(), NOW()),
+
+(43, $$This Love$$, 'Maroon 5', NOW(), NOW()),
+
+(44, $$This Town$$, 'Niall Horan', NOW(), NOW()),
+
+(45, $$Time After Time$$, 'Cindy Lauper', NOW(), NOW()),
+
+(46, $$Torn$$, 'Natalie Imbruglia', NOW(), NOW()),
+
+(47, $$What a Wonderful World$$, 'Sam Cooke', NOW(), NOW()),
+
+(48, $$Wicked Games$$, 'Chris Isaak', NOW(), NOW()),
+
+(49, $$You Can't Hurry Love$$, 'The Supremes', NOW(), NOW()),
+
+(50, $$You Got a Friend$$, 'Carol King', NOW(), NOW()),
+
+(51, $$Your Song$$, 'Elton John', NOW(), NOW())

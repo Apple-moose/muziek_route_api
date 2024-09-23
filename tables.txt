@@ -1,0 +1,24 @@
+1-Association Tables (user_favorites and user_hates):
+
+These tables handle the many-to-many relationship between User and Song. Each table has two columns:
+user_id: References the id column in the users table.
+song_id: References the id column in the songs table.
+
+2-Song Model:
+
+The favorited_by and hated_by relationships use the association tables to track which users have favorited or hated a song.
+The back_populates keyword links this relationship to the User model.
+
+3-User Model:
+
+The favorite_songs and hated_songs relationships allow you to access the songs a user has favorited or hated through the association tables.
+Query Example:
+
+To add a favorite song for a user:
+
+user.favorite_songs.append(song)
+session.commit()
+
+To retrieve users who favorited a song:
+
+song.favorited_by
