@@ -34,12 +34,17 @@ class SongUpdate(BaseModel):
 class UserBase(BaseModel):
     id: int
     username: str
-    imageUrl: Union[str, None] = None
+    show_no: Union[int, None] = None
     is_Admin: Union[bool, None] = None
 
 class UserCreate(BaseModel):
     username: str
+    show_no: int
 
+class AdminCreate(BaseModel):
+    username: str
+    password: str
+    is_Admin: bool
 
 class User(UserBase):
     createdAt: datetime

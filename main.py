@@ -1,4 +1,3 @@
-
 from typing import List
 from fastapi import Depends, FastAPI, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,8 +6,6 @@ from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 from app import songs, users, database, schemas, songs, auth
 from app.deps import get_current_user, is_user_admin
-
-
 
 load_dotenv()
 
@@ -50,6 +47,14 @@ def create_user(
 ):
     return users.create_user(db, user=user)
 
+
+# Create server Administrator
+@app.post("/auth/admin", response_model=schemas.UserBase)
+def create_admin(
+    user: schemas.AdminCreate, 
+    db: Session = Depends(get_db)
+):
+    return users.create_admin(db, user=user)
 
 # Login
 @app.post("/auth/login", response_model=schemas.Token)
@@ -111,85 +116,85 @@ def read_songs(
 
 
 # Get song by Id
-@app.get("/songs/{prod_id}", response_model=schemas.Song)
-def read_song(
-    prod_id: int,
-    db: Session = Depends(get_db)):
-    results = songs.get_song_by_id(db, prod_id=prod_id)
-    if results is None:
-        raise HTTPException(status_code=404, detail="No lists found")
-    return results
+# @app.get("/songs/{prod_id}", response_model=schemas.Song)
+# def read_song(
+#     prod_id: int,
+#     db: Session = Depends(get_db)):
+#     results = songs.get_song_by_id(db, prod_id=prod_id)
+#     if results is None:
+#         raise HTTPException(status_code=404, detail="No lists found")
+#     return results
 
 
 #GET songs by category's name
-@app.get("/songs/category/name:{category_name}", response_model=List[schemas.Song])
-def get_songs_list_by_category_name(
-    category_name: str,
-    db: Session = Depends(get_db)):
-    categoryId = songs.find_song_id_from_name(db, cat_name=category_name)
-    results = songs.get_songs_list_by_category_id(db, cat_id=categoryId)
-    if results is None:
-        raise HTTPException(status_code=404, detail="No lists found")
-    return results
+# @app.get("/songs/category/name:{category_name}", response_model=List[schemas.Song])
+# def get_songs_list_by_category_name(
+#     category_name: str,
+#     db: Session = Depends(get_db)):
+#     categoryId = songs.find_song_id_from_name(db, cat_name=category_name)
+#     results = songs.get_songs_list_by_category_id(db, cat_id=categoryId)
+#     if results is None:
+#         raise HTTPException(status_code=404, detail="No lists found")
+#     return results
 
 
 #GET songs by category's Id
-@app.get("/songs/category/categoryId:{category_id}", response_model=List[schemas.song])
-def songs_list_by_categoryId(
-    category_id: int,
-    db: Session = Depends(get_db)):
-    results = songs.get_songs_list_by_category_id(db, cat_id=category_id)
-    if results is None:
-        raise HTTPException(status_code=404, detail="No lists found")
-    return results
+# @app.get("/songs/category/categoryId:{category_id}", response_model=List[schemas.song])
+# def songs_list_by_categoryId(
+#     category_id: int,
+#     db: Session = Depends(get_db)):
+#     results = songs.get_songs_list_by_category_id(db, cat_id=category_id)
+#     if results is None:
+#         raise HTTPException(status_code=404, detail="No lists found")
+#     return results
 
 
-# create a new song profile
-@app.post("/song", response_model=schemas.song)
-def write_a_new_song(
-    song: schemas.songCreate, 
-    user: schemas.UserBase = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    admin = is_user_admin(db, user_id=user.id)
-    if admin is None:
-        raise HTTPException(status_code=404, detail="You are not an Administrator!!!")
-    return songs.create_song(db, song=song)
+# # create a new song profile
+# @app.post("/song", response_model=schemas.song)
+# def write_a_new_song(
+#     song: schemas.songCreate, 
+#     user: schemas.UserBase = Depends(get_current_user),
+#     db: Session = Depends(get_db)
+# ):
+#     admin = is_user_admin(db, user_id=user.id)
+#     if admin is None:
+#         raise HTTPException(status_code=404, detail="You are not an Administrator!!!")
+#     return songs.create_song(db, song=song)
 
 
 # Update a song by id
-@app.post("/song/{id}", response_model=schemas.song)
-async def update_song(
-    id: int,
-    song: schemas.songUpdate, 
-    user: schemas.UserBase = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    check_song = songs.get_song_by_id(db, prod_id=id)
-    admin = is_user_admin(db, user_id=user.id)
+# @app.post("/song/{id}", response_model=schemas.song)
+# async def update_song(
+#     id: int,
+#     song: schemas.songUpdate, 
+#     user: schemas.UserBase = Depends(get_current_user),
+#     db: Session = Depends(get_db)
+# ):
+#     check_song = songs.get_song_by_id(db, prod_id=id)
+#     admin = is_user_admin(db, user_id=user.id)
 
-    if check_song is None:
-        raise HTTPException(status_code=404, detail="song not found")
-    if admin is None:
-        raise HTTPException(status_code=404, detail="You are not an Administratore!!!")
-    else:
-        return songs.update_song(
-            db, 
-            pro_id=id, 
-            song=song)
+#     if check_song is None:
+#         raise HTTPException(status_code=404, detail="song not found")
+#     if admin is None:
+#         raise HTTPException(status_code=404, detail="You are not an Administratore!!!")
+#     else:
+#         return songs.update_song(
+#             db, 
+#             pro_id=id, 
+#             song=song)
 
 # Remove song by id
-@app.delete("/song/{id}", response_model=schemas.song)
-def remove_song(
-    id: int,
-    user: schemas.UserBase = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    admin = is_user_admin(db, user_id=user.id)
-    if admin is None:
-        raise HTTPException(status_code=404, detail="You are not an Administratore!!!")
+# @app.delete("/song/{id}", response_model=schemas.song)
+# def remove_song(
+#     id: int,
+#     user: schemas.UserBase = Depends(get_current_user),
+#     db: Session = Depends(get_db)
+# ):
+#     admin = is_user_admin(db, user_id=user.id)
+#     if admin is None:
+#         raise HTTPException(status_code=404, detail="You are not an Administratore!!!")
 
-    return songs.delete_song(db, pro_id=id)
+#     return songs.delete_song(db, pro_id=id)
 
 
 #-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o CATEGORY  -o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-

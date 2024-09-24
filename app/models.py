@@ -40,7 +40,7 @@ class User(Base):
     hated_songs = relationship("Song", secondary=hate_association_table, back_populates="hated_by")
 
     password = Column(String, nullable=True)
-    disabled = Column(Boolean, default=False)
+    show_no = Column(Integer, nullable=True)
     is_Admin = Column(Boolean, default=False)
     createdAt = Column(DateTime(timezone=True), default=func.now(), nullable=False)
     updatedAt = Column(DateTime(timezone=True), default=func.now(), onupdate=func.now(), nullable=False)

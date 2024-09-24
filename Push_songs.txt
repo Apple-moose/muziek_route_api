@@ -1,3 +1,9 @@
+SQL to reset autoincrement
+
+SELECT setval('your_table_name_id_seq', 1, false);
+
+
+
 SQL insert one row query:
 
 insert into songs (id, title, artist, "createdAt", "updatedAt")

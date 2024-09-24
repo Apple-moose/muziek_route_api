@@ -17,13 +17,22 @@ def verify_password(password: str, hashed_pass: str) -> bool:
 
 #Create a user
 def create_user(db: Session, user: schemas.UserCreate):
+    db_user = models.User(
+    username=user.username,
+    show_no=user.show_no 
+    )
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+#Create an administrator
+def create_admin(db: Session, user: schemas.AdminCreate):
     hashed_password = get_hashed_password(user.password)
     db_user = models.User(
-    firstname=user.firstname, 
-    lastname=user.lastname, 
-    email=user.email,
+    username=user.username, 
     password=hashed_password,
-    imageUrl=user.imageUrl
+    is_Admin=user.is_Admin
     )
     db.add(db_user)
     db.commit()
@@ -34,7 +43,7 @@ def create_user(db: Session, user: schemas.UserCreate):
 # User login & Create acess_token
 def login_user(db: Session, user: schemas.UserCredentials):
     db_user = db.query(models.User).filter(
-        models.User.email == user.email).first()
+        models.User.username == user.username).first()
 
     user_password_error = "Incorrect username or password"
 
@@ -43,7 +52,7 @@ def login_user(db: Session, user: schemas.UserCredentials):
     if not verify_password(user.password, db_user.password):
         raise HTTPException(status_code=401, detail=user_password_error)
     return {
-        "access_token": auth.create_access_token(f"{db_user.id}:{db_user.email}"),
+        "access_token": auth.create_access_token(f"{db_user.id}:{db_user.username}"),
         "token_type": "bearer"}
 
 
@@ -62,7 +71,7 @@ def get_user_by_id(db: Session, user_id: int):
 #Docs login
 def docs_login_user(db: Session, user: schemas.UserCredentials):
     db_user = db.query(models.User).filter(
-        models.User.email == user.username).first()
+        models.User.username == user.username).first()
 
     user_password_error = "Incorrect username or password"
 
@@ -71,6 +80,6 @@ def docs_login_user(db: Session, user: schemas.UserCredentials):
     if not verify_password(user.password, db_user.password):
         raise HTTPException(status_code=401, detail=user_password_error)
     return {
-        "access_token": auth.create_access_token(f"{db_user.id}:{db_user.email}"),
+        "access_token": auth.create_access_token(f"{db_user.id}:{db_user.username}"),
         "token_type": "bearer"}
 
