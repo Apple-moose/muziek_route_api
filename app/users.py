@@ -1,7 +1,7 @@
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from . import models, schemas, auth
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 
 
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -25,6 +25,26 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+def delete_user(db: Session, user_id: int):
+    db_user = db.query(models.User).filter(
+    models.User.id == user_id,
+    ).first()
+    if not db_user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found."
+        )
+    try:
+       db.delete(db_user)
+       db.commit()
+       return db_user
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"An error occurred while deleting the user: {str(e)}"
+        )
 
 #Create an administrator
 def create_admin(db: Session, user: schemas.AdminCreate):
@@ -82,4 +102,3 @@ def docs_login_user(db: Session, user: schemas.UserCredentials):
     return {
         "access_token": auth.create_access_token(f"{db_user.id}:{db_user.username}"),
         "token_type": "bearer"}
-

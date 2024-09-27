@@ -3,6 +3,30 @@ from typing import Union, Optional
 from pydantic import BaseModel, Field
 from datetime import datetime
 
+# Voting stuff
+
+class FavsBase(BaseModel):
+    user_id: int
+    song_id: int
+
+class Favs(FavsBase):
+    user_id: int
+    song_id: int
+
+    class Config:
+        from_attributes = True 
+
+class HatesBase(BaseModel):
+    user_id: int
+    song_id: int
+
+class Hates(HatesBase):
+    user_id: int
+    song_id: int
+
+    class Config:
+        from_attributes = True 
+
 # Song stuff
 
 class SongBase(BaseModel):
@@ -25,10 +49,7 @@ class Song(SongBase):
 class SongUpdate(BaseModel):
     title: str
     artist: int
-
-
-
-
+    
 # User Stuff
 
 class UserBase(BaseModel):
