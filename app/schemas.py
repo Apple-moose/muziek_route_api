@@ -4,10 +4,25 @@ from pydantic import BaseModel, Field
 from datetime import datetime
 
 # Voting stuff
+class Votes(BaseModel):
+    show_no: int
+    user_id: int
+    username: str
+    song_id: int
+    title: str
+    artist: str
+    like: int
+    dislike: int
+
+    class Config:
+        from_attributes = True 
 
 class FavsBase(BaseModel):
     user_id: int
     song_id: int
+
+    class Config:
+        orm_mode = True
 
 class Favs(FavsBase):
     user_id: int
@@ -19,6 +34,10 @@ class Favs(FavsBase):
 class HatesBase(BaseModel):
     user_id: int
     song_id: int
+
+    class Config:
+        orm_mode = True
+
 
 class Hates(HatesBase):
     user_id: int
@@ -36,7 +55,7 @@ class SongBase(BaseModel):
 
 class SongCreate(BaseModel):
     title: str
-    artist: int
+    artist: str
 
 class Song(SongBase):
     id: int
@@ -48,7 +67,7 @@ class Song(SongBase):
 
 class SongUpdate(BaseModel):
     title: str
-    artist: int
+    artist: str
     
 # User Stuff
 

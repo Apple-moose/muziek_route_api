@@ -29,8 +29,8 @@ def get_db():
         db.close()
 
 reuseable_oauth = OAuth2PasswordBearer(
-    tokenUrl="/docslogin",  # also in deps.py!
-    # tokenUrl="/auth/login", 
+    # tokenUrl="/docslogin",  # also in deps.py!
+    tokenUrl="/auth/login", 
 
     scheme_name="JWT"
 )
@@ -124,23 +124,30 @@ def read_songs(
 
 #-o-o-o-o-o-o-o-o-o-o-o-o-o VOTES -o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-
 
+# get all votes
+@app.get("/votes", response_model=List[schemas.Votes])
+def fetch_all_votes(
+    db: Session = Depends(get_db)):
+    results = songs.get_votes(db)
+    if results is None:
+        raise HTTPException(status_code=404, detail="No votes found")
+    return results
+
 # Update User's Likes
 @app.post("/like", response_model=schemas.Favs)
 def like_song(
-    song_id: int, 
-    user_id: int,
+    payload: schemas.FavsBase, 
     db: Session = Depends(get_db)
 ):
-    return songs.like_song(db, song_id=song_id, user_id=user_id)
+    return songs.like_song(db, song_id=payload.song_id, user_id=payload.user_id)
 
-# Update User's dislike
+# Update User's disLikes
 @app.post("/dislike", response_model=schemas.Hates)
 def dislike_song(
-    song_id: int, 
-    user_id: int,
+    payload: schemas.HatesBase, 
     db: Session = Depends(get_db)
 ):
-    return songs.dislike_song(db, song_id=song_id, user_id=user_id)
+    return songs.dislike_song(db, song_id=payload.song_id, user_id=payload.user_id)
 
 # Reset all votes from user
 @app.delete("/reset/{id}", response_model=schemas.User)

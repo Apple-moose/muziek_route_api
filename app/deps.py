@@ -10,8 +10,8 @@ from sqlalchemy.orm import Session
 
 reuseable_oauth = OAuth2PasswordBearer(
     # (Also in main.py)
-    tokenUrl="/docslogin",  
-    # tokenUrl="/auth/login",
+    # tokenUrl="/docslogin",  
+    tokenUrl="/auth/login",
     scheme_name="JWT"
 )
 
