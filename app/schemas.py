@@ -36,7 +36,7 @@ class HatesBase(BaseModel):
     song_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Hates(HatesBase):
