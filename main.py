@@ -29,8 +29,8 @@ def get_db():
         db.close()
 
 reuseable_oauth = OAuth2PasswordBearer(
-    tokenUrl="/docslogin",  # also in deps.py!
-    # tokenUrl="/auth/login", 
+    # tokenUrl="/docslogin",  # also in deps.py!
+    tokenUrl="/auth/login", 
 
     scheme_name="JWT"
 )
